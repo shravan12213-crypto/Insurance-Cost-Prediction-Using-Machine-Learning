@@ -5,8 +5,12 @@
 __pycache__/
 *.py[cod]
 
-# Generated model files
-models/*.pkl
-
 # Environment variables
 .env
+
+# IDE settings
+.vscode/
+
+#OS Files
+.DS_Store
+Thumbs.db
