@@ -1,215 +1,312 @@
 # 🏥 Insurance Cost Prediction Using Machine Learning
 
-A machine learning project that predicts medical insurance costs based on personal attributes such as age, BMI, smoking status, gender, number of children, and residential region.
+A machine learning project that predicts individual medical insurance charges based on demographic information, lifestyle factors, and personal characteristics.
 
-The project uses **Python and Scikit-learn** to train and evaluate regression models and **Streamlit** to provide an interactive web application for insurance cost prediction and data visualization.
+This project trains and compares three regression models — Linear Regression, Random Forest, and Gradient Boosting — and provides an interactive Streamlit dashboard for insurance cost prediction, model evaluation, and data visualization.
 
-## ✨ Features
+## 📌 Project Overview
 
-* 📊 **Data Analysis:** Explore the medical insurance dataset using visualizations.
-* ⚙️ **Data Preprocessing:** Automatically handle categorical and numerical features using Scikit-learn.
-* 🤖 **Machine Learning:** Train and compare Linear Regression and Random Forest Regression models.
-* 📈 **Model Evaluation:** Evaluate model performance using Mean Absolute Error (MAE) and R² score.
-* 💰 **Cost Prediction:** Estimate insurance charges using user-provided information.
-* 📉 **Data Visualization:** Visualize relationships between age, smoking status, and insurance charges.
-* 🖥️ **Interactive Dashboard:** Use a simple, user-friendly Streamlit interface.
+Medical insurance charges can vary depending on several factors, including age, BMI, smoking habits, and other personal characteristics.
 
-## 🛠️ Technologies Used
+The objective of this project is to analyze historical insurance data, identify patterns using machine learning, and estimate insurance charges based on user-provided information.
 
-| Technology   | Purpose                                            |
-| ------------ | -------------------------------------------------- |
-| Python       | Core programming language                          |
-| Pandas       | Data manipulation and analysis                     |
-| NumPy        | Numerical operations                               |
-| Scikit-learn | Data preprocessing, model training, and evaluation |
-| Matplotlib   | Data visualization                                 |
-| Joblib       | Saving and loading trained models                  |
-| Streamlit    | Interactive web application                        |
+### ✨ Key Features
+
+* 🤖 Train and compare three machine learning regression models.
+* 📊 Interactive dashboard built with Streamlit.
+* 💰 Predict estimated insurance charges using personal characteristics.
+* 📈 Compare model performance using MAE and R² score.
+* 📉 Visualize relationships between age, smoking habits, and insurance charges.
+* 🔍 Compare predictions from multiple trained models.
+* ⚙️ Automated preprocessing of numerical and categorical features.
+* 💾 Save and reuse trained models with Joblib.
+
+## 🛠️ Tech Stack
+
+| Technology   | Purpose                                 |
+| ------------ | --------------------------------------- |
+| Python       | Core programming language               |
+| Pandas       | Data manipulation and analysis          |
+| Scikit-learn | Data preprocessing and machine learning |
+| Matplotlib   | Data visualization                      |
+| Streamlit    | Interactive web application             |
+| Joblib       | Saving and loading trained models       |
+| Git & GitHub | Version control and project hosting     |
 
 ## 📂 Project Structure
 
 ```text
-insurance-cost-predictor-ml/
+Insurance-Cost-Prediction-Using-Machine-Learning/
 │
-├── insurance.csv          # Medical insurance dataset
-├── train_model.py         # Data preprocessing and model training
-├── app.py                 # Streamlit web application
-├── insurance_model.pkl    # Saved trained model pipeline
-├── requirements.txt       # Python dependencies
-└── README.md              # Project documentation
+├── data/
+│   └── insurance.csv
+│
+├── models/
+│   ├── insurance_model.joblib
+│   ├── linear_regression.joblib
+│   ├── random_forest.joblib
+│   ├── gradient_boosting.joblib
+│   ├── model_comparison.csv
+│   └── test_results.csv
+│
+├── app.py
+├── train_model.py
+├── check_data.py
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
-*The files `insurance_model.pkl` and other generated files will be created during development. The exact structure may change as the project evolves.*
+**File descriptions:**
+
+* `data/insurance.csv` — Dataset used for training and evaluation.
+* `models/insurance_model.joblib` — Best-performing trained model used for predictions.
+* `models/linear_regression.joblib` — Trained Linear Regression pipeline.
+* `models/random_forest.joblib` — Trained Random Forest pipeline.
+* `models/gradient_boosting.joblib` — Trained Gradient Boosting pipeline.
+* `models/model_comparison.csv` — Model performance comparison results.
+* `models/test_results.csv` — Actual and predicted insurance charges for the test set.
+* `train_model.py` — Preprocesses data, trains models, evaluates performance, and saves model artifacts.
+* `app.py` — Runs the interactive Streamlit dashboard.
+* `check_data.py` — Inspects the dataset.
+* `requirements.txt` — Lists the project's Python dependencies.
+
+*The individual model filenames assume all three trained pipelines have been saved by the training script.*
 
 ## 📊 Dataset
 
-This project uses the **Medical Cost Personal Dataset** available on Kaggle.
-
-**Dataset:** [Medical Cost Personal Dataset](https://www.kaggle.com/datasets/mirichoi0218/insurance)
-
-The dataset contains information about individuals and their medical insurance charges.
+This project uses the **Medical Cost Personal Dataset**, which contains demographic and lifestyle information alongside individual medical insurance charges.
 
 ### Dataset Features
 
-| Feature    | Description                                 |
-| ---------- | ------------------------------------------- |
-| `age`      | Age of the individual                       |
-| `sex`      | Gender of the individual                    |
-| `bmi`      | Body Mass Index                             |
-| `children` | Number of dependent children                |
-| `smoker`   | Smoking status                              |
-| `region`   | Residential region                          |
-| `charges`  | Medical insurance charges (target variable) |
+| Feature    | Description                          |
+| ---------- | ------------------------------------ |
+| `age`      | Age of the individual                |
+| `sex`      | Sex category recorded in the dataset |
+| `bmi`      | Body Mass Index                      |
+| `children` | Number of dependent children         |
+| `smoker`   | Smoking status                       |
+| `region`   | Residential region                   |
+| `charges`  | Medical insurance charges            |
 
-The `charges` column is the target the machine learning models learn to predict.
+**Target variable:** `charges`
 
-## 🧠 Machine Learning Models
-
-The project uses regression algorithms to estimate medical insurance charges.
-
-### 1. Linear Regression
-
-Linear Regression serves as the baseline model. It learns a linear relationship between the input features and insurance charges.
-
-### 2. Random Forest Regression
-
-Random Forest Regression combines multiple decision trees to model potentially nonlinear relationships between input features and insurance charges.
-
-Both models will be evaluated on the same test dataset to compare their predictive performance.
+The six remaining columns are used as input features to predict insurance charges.
 
 ### Data Preprocessing
 
-The project uses Scikit-learn's preprocessing tools:
+The machine learning pipeline performs the following operations:
 
-* `ColumnTransformer` to apply different transformations to numerical and categorical features.
-* `OneHotEncoder` to convert categorical features into numerical representations.
-* `Pipeline` to combine preprocessing and model training into a consistent workflow.
+1. Separates input features from the target variable.
+2. Encodes categorical features using One-Hot Encoding.
+3. Preserves numerical features for model training.
+4. Splits the dataset into training and testing sets.
+5. Trains and evaluates multiple regression models.
 
-This ensures that the same preprocessing steps are applied during both training and prediction.
+The categorical encoder uses `OneHotEncoder(handle_unknown="ignore")` to handle previously unseen categories during prediction.
 
-## 📈 Model Evaluation
+## 🧠 Machine Learning Models
 
-The models are evaluated using the following metrics:
+Three regression algorithms are trained and compared.
 
-| Metric                    | Description                                                                                                                        |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Mean Absolute Error (MAE) | Measures the average absolute difference between actual and predicted insurance charges. Lower values indicate better performance. |
-| R² Score                  | Measures how well the model explains variation in insurance charges. A score closer to 1 generally indicates a better fit.         |
+| Model                       | Description                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------------ |
+| Linear Regression           | Establishes a baseline by modelling linear relationships between features and insurance charges. |
+| Random Forest Regressor     | Combines predictions from multiple decision trees to model complex relationships.                |
+| Gradient Boosting Regressor | Builds an ensemble of decision trees sequentially to improve predictive performance.             |
 
-The final model will be selected based on its evaluation results.
+### Evaluation Metrics
 
-*Actual evaluation metrics will be added after training and testing the models.*
+**1. Mean Absolute Error (MAE)**
 
-## 🚀 Getting Started
+Measures the average absolute difference between actual and predicted insurance charges. A lower MAE indicates more accurate predictions on average.
+
+**2. R² Score**
+
+Measures how well the model explains the variation in insurance charges. A score closer to 1 generally indicates a better fit.
+
+### 📈 Model Performance
+
+The following results were obtained during the initial evaluation on a held-out test set.
+
+| Model             |       MAE | R² Score |
+| ----------------- | --------: | -------: |
+| Linear Regression | $4,181.19 |   0.7836 |
+| Random Forest     | $2,546.50 |   0.8637 |
+| Gradient Boosting | $2,406.17 |   0.8793 |
+
+**Best-performing model: Gradient Boosting Regressor**
+
+Gradient Boosting achieved the lowest MAE and highest R² score among the three models in this evaluation. It was selected as the best-performing model for the prediction dashboard.
+
+*Note: These are the initial evaluation results. Results may change if the dataset, preprocessing, model parameters, or evaluation procedure changes.*
+
+## 📊 Dashboard Features
+
+The Streamlit application provides five main sections.
+
+### 1. Dashboard Overview
+
+Displays dataset information, model performance metrics, and a preview of the dataset.
+
+### 2. Model Comparison
+
+Compares Linear Regression, Random Forest, and Gradient Boosting using performance tables and charts.
+
+### 3. Data Visualizations
+
+Includes visualizations such as:
+
+* Age vs. Insurance Charges
+* Smoking Status vs. Average Insurance Charges
+* Actual vs. Predicted Insurance Charges
+
+### 4. Insurance Prediction
+
+Allows users to enter the following details to estimate insurance charges:
+
+* Age
+* Sex
+* BMI
+* Number of children
+* Smoking status
+* Region
+
+The application processes these inputs using the trained machine learning pipeline and displays an estimated insurance charge.
+
+### 5. About the Project
+
+Explains the project's objectives, technologies, machine learning models, and limitations.
+
+When all three individual model files are available, the prediction interface can also compare estimates from the different models for the same input.
+
+## 🚀 Installation and Setup
 
 Follow these steps to run the project locally.
 
 ### Prerequisites
 
-* Python 3.10 or a compatible version
-* Visual Studio Code or another Python editor
-* Git (optional, for version control)
+* Python 3.10 or another version compatible with the installed dependencies
+* Git
+* Visual Studio Code or another Python-compatible editor
 
-### 1. Clone the Repository
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/insurance-cost-predictor-ml.git
+git clone https://github.com/YOUR_USERNAME/Insurance-Cost-Prediction-Using-Machine-Learning.git
 ```
-
-Replace `YOUR-USERNAME` with your GitHub username.
 
 Navigate to the project directory:
 
 ```bash
-cd insurance-cost-predictor-ml
+cd Insurance-Cost-Prediction-Using-Machine-Learning
 ```
 
-### 2. Create a Virtual Environment (Recommended)
+Replace `YOUR_USERNAME` with your GitHub username.
+
+### Step 2: Create a Virtual Environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate the environment on Windows PowerShell:
+### Step 3: Activate the Virtual Environment
+
+**Windows PowerShell:**
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Install Dependencies
+**Windows Command Prompt:**
 
-```bash
-pip install -r requirements.txt
+```cmd
+.venv\Scripts\activate.bat
 ```
 
-If `requirements.txt` is not available yet, install the libraries directly:
+### Step 4: Install Dependencies
 
 ```bash
-pip install pandas numpy scikit-learn matplotlib joblib streamlit
+python -m pip install -r requirements.txt
 ```
 
-### 4. Add the Dataset
+### Step 5: Train the Models
 
-Download `insurance.csv` from Kaggle and place it in the project directory.
-
-### 5. Train the Models
-
-Run the training script:
+If the trained model files are not already available, run:
 
 ```bash
 python train_model.py
 ```
 
-The script will preprocess the data, train and evaluate the regression models, and save the selected trained model.
+This executes the training pipeline and saves the model artifacts and evaluation results configured in the script.
 
-### 6. Launch the Web Application
-
-After the trained model has been generated, start the Streamlit application:
+### Step 6: Launch the Dashboard
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
-The application will open in your browser, allowing you to enter personal attributes and obtain an estimated insurance cost.
+Streamlit will display a local URL in the terminal, usually:
 
-## 📉 Visualizations
+```text
+http://localhost:8501
+```
 
-The dashboard is planned to include:
+Open this URL in your browser to access the dashboard.
 
-* **Age vs. Insurance Charges:** Explore how insurance costs vary with age.
-* **Smoking Status vs. Average Charges:** Compare average insurance costs between smokers and non-smokers.
-* **Actual vs. Predicted Charges:** Assess the model's predictions against actual charges in the test dataset.
-* **Model Performance Comparison:** Compare MAE and R² scores for the trained regression models.
+## 💻 Example Prediction
 
-The visualizations will be generated from the dataset and actual model evaluation results.
+Consider an individual with the following characteristics:
 
-## 🎯 Project Objectives
+| Feature  | Example Value |
+| -------- | ------------- |
+| Age      | 30            |
+| Sex      | Female        |
+| BMI      | 25.5          |
+| Children | 1             |
+| Smoker   | No            |
+| Region   | Southeast     |
 
-* Understand the end-to-end machine learning workflow.
-* Apply data preprocessing techniques to real-world tabular data.
-* Train and compare regression algorithms.
-* Evaluate model performance using standard regression metrics.
-* Build an interactive machine learning application.
-* Present predictions and insights through data visualizations.
+The application uses these inputs to generate an estimated insurance charge.
+
+The predicted amount depends on the trained model and should not be interpreted as an official insurance quotation.
 
 ## 🔮 Future Improvements
 
-* Experiment with additional regression algorithms, such as Gradient Boosting.
-* Improve prediction performance through hyperparameter tuning.
-* Add feature importance analysis.
-* Enhance the dashboard with additional data visualizations.
-* Deploy the application online for public access.
+* [ ] Add RMSE (Root Mean Squared Error) to model evaluation.
+* [ ] Implement 5-fold cross-validation for more robust model comparison.
+* [ ] Perform hyperparameter tuning to improve model performance.
+* [ ] Add feature importance analysis.
+* [ ] Provide more detailed explanations of individual predictions.
+* [ ] Improve dashboard design and interactivity.
+* [ ] Deploy the Streamlit application online.
+* [ ] Add additional evaluation charts and model diagnostics.
 
-## ⚠️ Disclaimer
+## ⚠️ Limitations
 
-This project is intended for educational purposes only. Predictions are estimates based on patterns in the dataset and should not be treated as actual insurance quotations or professional financial advice.
+* Predictions are estimates based on patterns in the available dataset.
+* Model accuracy depends on the quality and representativeness of the training data.
+* Historical relationships do not establish causation.
+* The dataset may not reflect current insurance pricing, policies, or regional differences.
+* Predictions should not be treated as guaranteed insurance quotes or professional financial advice.
+
+## 🎯 Learning Outcomes
+
+Through this project, I explored:
+
+* Data inspection and preprocessing using Pandas and Scikit-learn.
+* Encoding categorical variables for machine learning.
+* Training and comparing regression algorithms.
+* Evaluating models using MAE and R² score.
+* Saving and loading trained pipelines using Joblib.
+* Building an interactive machine learning dashboard with Streamlit.
+* Visualizing datasets and prediction results.
+* Organizing a Python project for GitHub.
 
 ## 👨‍💻 Author
 
 **Shravan More**
 
-Developed as a machine learning project using Python, Scikit-learn, and Streamlit.
+## 📄 License
 
----
-
-⭐ If you find this project useful, consider giving the repository a star!
+This project was developed for educational purposes and machine learning practice. Before redistributing the project or dataset, verify the applicable dataset licensing terms. A separate project license can be added if required.
