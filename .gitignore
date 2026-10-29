@@ -1,0 +1,12 @@
+# Virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Generated model files
+models/*.pkl
+
+# Environment variables
+.env
